@@ -7,14 +7,41 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43D3E95B62A7044C06330EF1 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB1258A85CA7EFAC7E31F16 /* Pods.framework */; };
 		FA6225AD1C97F4EC000FC532 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6225AC1C97F4EC000FC532 /* AppDelegate.swift */; };
 		FA6225AF1C97F4EC000FC532 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6225AE1C97F4EC000FC532 /* ViewController.swift */; };
 		FA6225B21C97F4EC000FC532 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA6225B01C97F4EC000FC532 /* Main.storyboard */; };
 		FA6225B41C97F4EC000FC532 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA6225B31C97F4EC000FC532 /* Assets.xcassets */; };
 		FA6225B71C97F4EC000FC532 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA6225B51C97F4EC000FC532 /* LaunchScreen.storyboard */; };
+		FA6225D41C97F5F1000FC532 /* happy_young_lady_big.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6225C11C97F5F1000FC532 /* happy_young_lady_big.png */; };
+		FA6225D51C97F5F1000FC532 /* ic_back_small.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6225C21C97F5F1000FC532 /* ic_back_small.png */; };
+		FA6225D61C97F5F1000FC532 /* ic_back_small_plus.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6225C31C97F5F1000FC532 /* ic_back_small_plus.png */; };
+		FA6225D71C97F5F1000FC532 /* ic_backspace.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6225C41C97F5F1000FC532 /* ic_backspace.png */; };
+		FA6225D81C97F5F1000FC532 /* ic_black_arrow_back_bigw.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6225C51C97F5F1000FC532 /* ic_black_arrow_back_bigw.png */; };
+		FA6225D91C97F5F1000FC532 /* ic_calendar_7.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6225C61C97F5F1000FC532 /* ic_calendar_7.png */; };
+		FA6225DA1C97F5F1000FC532 /* ic_check_green.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6225C71C97F5F1000FC532 /* ic_check_green.png */; };
+		FA6225DB1C97F5F1000FC532 /* ic_clock_in.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6225C81C97F5F1000FC532 /* ic_clock_in.png */; };
+		FA6225DC1C97F5F1000FC532 /* ic_clock_in_green.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6225C91C97F5F1000FC532 /* ic_clock_in_green.png */; };
+		FA6225DD1C97F5F1000FC532 /* ic_clock_out_red.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6225CA1C97F5F1000FC532 /* ic_clock_out_red.png */; };
+		FA6225DE1C97F5F1000FC532 /* ic_company.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6225CB1C97F5F1000FC532 /* ic_company.png */; };
+		FA6225DF1C97F5F1000FC532 /* ic_location.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6225CC1C97F5F1000FC532 /* ic_location.png */; };
+		FA6225E01C97F5F1000FC532 /* ic_name.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6225CD1C97F5F1000FC532 /* ic_name.png */; };
+		FA6225E11C97F5F1000FC532 /* ic_out.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6225CE1C97F5F1000FC532 /* ic_out.png */; };
+		FA6225E21C97F5F1000FC532 /* ic_password.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6225CF1C97F5F1000FC532 /* ic_password.png */; };
+		FA6225E31C97F5F1000FC532 /* ic_shedule.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6225D01C97F5F1000FC532 /* ic_shedule.png */; };
+		FA6225E41C97F5F1000FC532 /* main_background.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6225D11C97F5F1000FC532 /* main_background.png */; };
+		FA6225E51C97F5F1000FC532 /* main_background_full.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FA6225D21C97F5F1000FC532 /* main_background_full.jpg */; };
+		FA6225E61C97F5F1000FC532 /* main_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6225D31C97F5F1000FC532 /* main_logo.png */; };
+		FA6225E81C981126000FC532 /* KeypadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6225E71C981126000FC532 /* KeypadViewController.swift */; };
+		FA6225EA1C982C85000FC532 /* QRScanningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6225E91C982C84000FC532 /* QRScanningViewController.swift */; };
+		FA6225EC1C985339000FC532 /* ClockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6225EB1C985339000FC532 /* ClockViewController.swift */; };
+		FABE561B1C9AF8AB00A1C6F3 /* SuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABE561A1C9AF8AB00A1C6F3 /* SuccessViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2CB1258A85CA7EFAC7E31F16 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A4A79C0222742AB64346B08 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		CFF8D04F3CA7A26A15AE66CF /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		FA6225A91C97F4EC000FC532 /* PayDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PayDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA6225AC1C97F4EC000FC532 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA6225AE1C97F4EC000FC532 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +49,29 @@
 		FA6225B31C97F4EC000FC532 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA6225B61C97F4EC000FC532 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA6225B81C97F4EC000FC532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA6225C11C97F5F1000FC532 /* happy_young_lady_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = happy_young_lady_big.png; sourceTree = "<group>"; };
+		FA6225C21C97F5F1000FC532 /* ic_back_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_back_small.png; sourceTree = "<group>"; };
+		FA6225C31C97F5F1000FC532 /* ic_back_small_plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_back_small_plus.png; sourceTree = "<group>"; };
+		FA6225C41C97F5F1000FC532 /* ic_backspace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_backspace.png; sourceTree = "<group>"; };
+		FA6225C51C97F5F1000FC532 /* ic_black_arrow_back_bigw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_black_arrow_back_bigw.png; sourceTree = "<group>"; };
+		FA6225C61C97F5F1000FC532 /* ic_calendar_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_calendar_7.png; sourceTree = "<group>"; };
+		FA6225C71C97F5F1000FC532 /* ic_check_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_check_green.png; sourceTree = "<group>"; };
+		FA6225C81C97F5F1000FC532 /* ic_clock_in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_clock_in.png; sourceTree = "<group>"; };
+		FA6225C91C97F5F1000FC532 /* ic_clock_in_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_clock_in_green.png; sourceTree = "<group>"; };
+		FA6225CA1C97F5F1000FC532 /* ic_clock_out_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_clock_out_red.png; sourceTree = "<group>"; };
+		FA6225CB1C97F5F1000FC532 /* ic_company.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_company.png; sourceTree = "<group>"; };
+		FA6225CC1C97F5F1000FC532 /* ic_location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_location.png; sourceTree = "<group>"; };
+		FA6225CD1C97F5F1000FC532 /* ic_name.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_name.png; sourceTree = "<group>"; };
+		FA6225CE1C97F5F1000FC532 /* ic_out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_out.png; sourceTree = "<group>"; };
+		FA6225CF1C97F5F1000FC532 /* ic_password.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_password.png; sourceTree = "<group>"; };
+		FA6225D01C97F5F1000FC532 /* ic_shedule.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_shedule.png; sourceTree = "<group>"; };
+		FA6225D11C97F5F1000FC532 /* main_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_background.png; sourceTree = "<group>"; };
+		FA6225D21C97F5F1000FC532 /* main_background_full.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = main_background_full.jpg; sourceTree = "<group>"; };
+		FA6225D31C97F5F1000FC532 /* main_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_logo.png; sourceTree = "<group>"; };
+		FA6225E71C981126000FC532 /* KeypadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeypadViewController.swift; sourceTree = "<group>"; };
+		FA6225E91C982C84000FC532 /* QRScanningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScanningViewController.swift; sourceTree = "<group>"; };
+		FA6225EB1C985339000FC532 /* ClockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockViewController.swift; sourceTree = "<group>"; };
+		FABE561A1C9AF8AB00A1C6F3 /* SuccessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +79,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43D3E95B62A7044C06330EF1 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		18B52C775CD551EB737410B4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2CB1258A85CA7EFAC7E31F16 /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3CFDE1C04C73C66E456F1A08 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4A4A79C0222742AB64346B08 /* Pods.debug.xcconfig */,
+				CFF8D04F3CA7A26A15AE66CF /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		FA6225A01C97F4EC000FC532 = {
 			isa = PBXGroup;
 			children = (
 				FA6225AB1C97F4EC000FC532 /* PayDay */,
 				FA6225AA1C97F4EC000FC532 /* Products */,
+				FA6225C01C97F5F1000FC532 /* drawable */,
+				3CFDE1C04C73C66E456F1A08 /* Pods */,
+				18B52C775CD551EB737410B4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,12 +127,42 @@
 			children = (
 				FA6225AC1C97F4EC000FC532 /* AppDelegate.swift */,
 				FA6225AE1C97F4EC000FC532 /* ViewController.swift */,
+				FA6225E71C981126000FC532 /* KeypadViewController.swift */,
+				FA6225E91C982C84000FC532 /* QRScanningViewController.swift */,
+				FA6225EB1C985339000FC532 /* ClockViewController.swift */,
+				FABE561A1C9AF8AB00A1C6F3 /* SuccessViewController.swift */,
 				FA6225B01C97F4EC000FC532 /* Main.storyboard */,
 				FA6225B31C97F4EC000FC532 /* Assets.xcassets */,
 				FA6225B51C97F4EC000FC532 /* LaunchScreen.storyboard */,
 				FA6225B81C97F4EC000FC532 /* Info.plist */,
 			);
 			path = PayDay;
+			sourceTree = "<group>";
+		};
+		FA6225C01C97F5F1000FC532 /* drawable */ = {
+			isa = PBXGroup;
+			children = (
+				FA6225C11C97F5F1000FC532 /* happy_young_lady_big.png */,
+				FA6225C21C97F5F1000FC532 /* ic_back_small.png */,
+				FA6225C31C97F5F1000FC532 /* ic_back_small_plus.png */,
+				FA6225C41C97F5F1000FC532 /* ic_backspace.png */,
+				FA6225C51C97F5F1000FC532 /* ic_black_arrow_back_bigw.png */,
+				FA6225C61C97F5F1000FC532 /* ic_calendar_7.png */,
+				FA6225C71C97F5F1000FC532 /* ic_check_green.png */,
+				FA6225C81C97F5F1000FC532 /* ic_clock_in.png */,
+				FA6225C91C97F5F1000FC532 /* ic_clock_in_green.png */,
+				FA6225CA1C97F5F1000FC532 /* ic_clock_out_red.png */,
+				FA6225CB1C97F5F1000FC532 /* ic_company.png */,
+				FA6225CC1C97F5F1000FC532 /* ic_location.png */,
+				FA6225CD1C97F5F1000FC532 /* ic_name.png */,
+				FA6225CE1C97F5F1000FC532 /* ic_out.png */,
+				FA6225CF1C97F5F1000FC532 /* ic_password.png */,
+				FA6225D01C97F5F1000FC532 /* ic_shedule.png */,
+				FA6225D11C97F5F1000FC532 /* main_background.png */,
+				FA6225D21C97F5F1000FC532 /* main_background_full.jpg */,
+				FA6225D31C97F5F1000FC532 /* main_logo.png */,
+			);
+			path = drawable;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +172,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FA6225BB1C97F4EC000FC532 /* Build configuration list for PBXNativeTarget "PayDay" */;
 			buildPhases = (
+				B6A6186C822ADA45146D2CB5 /* Check Pods Manifest.lock */,
 				FA6225A51C97F4EC000FC532 /* Sources */,
 				FA6225A61C97F4EC000FC532 /* Frameworks */,
 				FA6225A71C97F4EC000FC532 /* Resources */,
+				D4D6FEC1B9E23E46C99146E8 /* Embed Pods Frameworks */,
+				F7A571383A2F0B04AE05EF35 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -96,6 +200,7 @@
 				TargetAttributes = {
 					FA6225A81C97F4EC000FC532 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = SPM3Q9L69Q;
 					};
 				};
 			};
@@ -122,20 +227,91 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA6225D41C97F5F1000FC532 /* happy_young_lady_big.png in Resources */,
+				FA6225D91C97F5F1000FC532 /* ic_calendar_7.png in Resources */,
+				FA6225D81C97F5F1000FC532 /* ic_black_arrow_back_bigw.png in Resources */,
+				FA6225E11C97F5F1000FC532 /* ic_out.png in Resources */,
+				FA6225DD1C97F5F1000FC532 /* ic_clock_out_red.png in Resources */,
+				FA6225D51C97F5F1000FC532 /* ic_back_small.png in Resources */,
+				FA6225D61C97F5F1000FC532 /* ic_back_small_plus.png in Resources */,
+				FA6225DC1C97F5F1000FC532 /* ic_clock_in_green.png in Resources */,
 				FA6225B71C97F4EC000FC532 /* LaunchScreen.storyboard in Resources */,
+				FA6225DA1C97F5F1000FC532 /* ic_check_green.png in Resources */,
+				FA6225E21C97F5F1000FC532 /* ic_password.png in Resources */,
+				FA6225DE1C97F5F1000FC532 /* ic_company.png in Resources */,
+				FA6225E01C97F5F1000FC532 /* ic_name.png in Resources */,
 				FA6225B41C97F4EC000FC532 /* Assets.xcassets in Resources */,
+				FA6225E51C97F5F1000FC532 /* main_background_full.jpg in Resources */,
+				FA6225E61C97F5F1000FC532 /* main_logo.png in Resources */,
+				FA6225E41C97F5F1000FC532 /* main_background.png in Resources */,
+				FA6225E31C97F5F1000FC532 /* ic_shedule.png in Resources */,
+				FA6225DB1C97F5F1000FC532 /* ic_clock_in.png in Resources */,
+				FA6225DF1C97F5F1000FC532 /* ic_location.png in Resources */,
+				FA6225D71C97F5F1000FC532 /* ic_backspace.png in Resources */,
 				FA6225B21C97F4EC000FC532 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B6A6186C822ADA45146D2CB5 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D4D6FEC1B9E23E46C99146E8 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F7A571383A2F0B04AE05EF35 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		FA6225A51C97F4EC000FC532 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA6225EA1C982C85000FC532 /* QRScanningViewController.swift in Sources */,
 				FA6225AF1C97F4EC000FC532 /* ViewController.swift in Sources */,
+				FA6225E81C981126000FC532 /* KeypadViewController.swift in Sources */,
+				FA6225EC1C985339000FC532 /* ClockViewController.swift in Sources */,
+				FABE561B1C9AF8AB00A1C6F3 /* SuccessViewController.swift in Sources */,
 				FA6225AD1C97F4EC000FC532 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -247,23 +423,31 @@
 		};
 		FA6225BC1C97F4EC000FC532 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4A4A79C0222742AB64346B08 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = PayDay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.db2.PayDay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
 		FA6225BD1C97F4EC000FC532 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CFF8D04F3CA7A26A15AE66CF /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = PayDay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.db2.PayDay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -286,6 +470,7 @@
 				FA6225BD1C97F4EC000FC532 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

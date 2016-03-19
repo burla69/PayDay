@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DropDown
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        
+        //UITabBar.appearance().tintColor = UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 1.0)
+        
+        DropDown.startListeningToKeyboard()
+        
+        if let barFont = UIFont(name: "HelveticaNeue-Bold", size: 22.0) {
+            UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor(red:0.02, green:0.65, blue:0.88, alpha:1.0), NSFontAttributeName:barFont]
+        }
+//        //Изменяем цвет элементов статус бара
+//        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        
         return true
     }
 

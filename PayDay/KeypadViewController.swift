@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  KeypadViewController.swift
 //  PayDay
 //
 //  Created by Oleksandr Burla on 3/15/16.
@@ -8,33 +8,97 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    
-    
-    @IBOutlet weak var companyTextField: UITextField!
-    
-    @IBOutlet weak var nameTextField: UITextField!
 
-    @IBOutlet weak var passwordTextField: UITextField!
+
+class KeypadViewController: UIViewController, QRScanningViewControllerDelegate {
+    
+    var JSONFromLogin = [String: AnyObject]()
+    var location = ""
+    var token = ""
+    var firstName = ""
+    var lastName = ""
+    var time = ""
+    var date = ""
+    var tmsIDtemp = ""
     
     let baseURL = "http://ec2-52-34-242-50.us-west-2.compute.amazonaws.com"
     
     var isSuperUser = 0
+
+    
+    @IBOutlet weak var timeLabel: UILabel!
+    
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    @IBOutlet weak var locationLabel: UILabel!
+    
+    @IBOutlet weak var myNavigationItem: UINavigationItem!
+    
+    @IBOutlet weak var TmsID: UITextField!
+    
+    var isFirstDigit = true
+
+    
+    @IBAction func numberButtonPressed(sender: UIButton) {
+        
+        let digit = sender.currentTitle!
+        //Notice use of ternery operator in below line which results in a single line code
+        //instead of usual if-else multiple lines
+        TmsID.text = isFirstDigit ? digit : TmsID.text! + digit
+        isFirstDigit = false
+        
+    }
+    
+    @IBAction func deleteButtonPressed(sender: UIButton) {
+        let tempString = TmsID.text
+        TmsID.text = String(tempString!.characters.dropLast())
+    }
+    
+    
+    @IBAction func qrButtonPressed(sender: UIButton) {
+        
+        let vc: QRScanningViewController = self.storyboard?.instantiateViewControllerWithIdentifier("scanController") as! QRScanningViewController
+        
+        vc.delegate = self
+        
+        self.presentViewController(vc, animated: true, completion: nil)
+        
+        
+    }
+    
+    @IBAction func okButton(sender: UIButton) {
+        
+        let params = ["token": self.token, "user_identifier": TmsID.text!]
+        
+        
+       self.postRequest("/api/v1/users/identify/", params: params)
+        
+        
+    }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        // Do any additional setup after loading the view.
         
+        NSTimer.scheduledTimerWithTimeInterval(59, target: self, selector: "showTime", userInfo: nil, repeats: true)
         
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.translucent = true
+        updateDataFrom(JSONFromLogin)
         
+        self.timeLabel.text = time
+        self.locationLabel.text = location
+        self.dateLabel.text = date
         
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: "viewTapped")
-        self.view.addGestureRecognizer(gestureRecognizer)
-        
-        
+    }
+    
+    func showTime() {
+        let date = NSDate()
+        let outputFormat = NSDateFormatter()
+        outputFormat.locale = NSLocale(localeIdentifier:"en_US")
+        outputFormat.dateFormat = "hh:mm a"
+        timeLabel.text = outputFormat.stringFromDate(date)
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,29 +106,29 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func unwindToLogin(segue: UIStoryboardSegue) {
+    
+    func updateDataFrom(json: [String : AnyObject]) {
+        
+        self.location = (json["location"] as? String)!
+        self.token = (json["token"] as? String)!
+        self.time = (json["time"] as? String)!
+        self.date = (json["date"] as? String)!
         
     }
     
-    
-    func viewTapped() {
-        companyTextField.resignFirstResponder()
-        nameTextField.resignFirstResponder()
-        passwordTextField.resignFirstResponder()
-    }
-    
-    
-    @IBAction func loginButton(sender: UIButton) {
-        
-        let params = ["company": companyTextField.text!, "username": nameTextField.text!, "password": passwordTextField.text!, "latitude": "", "longitude": "", "allow_mobile_login" : "true"]
-        
-        
-        self.postRequest("/api/v1/users/login/", params: params)
 
+    @IBAction func unwindToKeypad(segue: UIStoryboardSegue) {
         
     }
     
+
     
+    func qrCodeFromQRViewController(string: String) {
+        
+        tmsIDtemp = string
+        self.TmsID.text = self.tmsIDtemp
+        
+    }
     
     //MARK: POST func
     
@@ -81,11 +145,11 @@ class ViewController: UIViewController {
         
         // or if you think the conversion might actually fail (which is unlikely if you built `params` yourself)
         
-         do {
+        do {
             request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(params, options: [])
-         } catch {
+        } catch {
             print(error)
-         }
+        }
         
         let task = session.dataTaskWithRequest(request) { data, response, error in
             guard data != nil else {
@@ -93,24 +157,20 @@ class ViewController: UIViewController {
                 return
             }
             
-            
+            // this, on the other hand, can quite easily fail if there's a server error, so you definitely
+            // want to wrap this in `do`-`try`-`catch`:
             
             
             do {
                 if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? NSDictionary {
-                    
-                    
+                                        
                     if let success = json["status"] as? Int {
                         print(success)
                         print(json)
                         dispatch_async(dispatch_get_main_queue(), {
                             if success == 0 {
                                 
-                                let user = (json["user"] as? [String : AnyObject])!
-                                self.isSuperUser = (user["is_superuser"] as? Int)!
-                                
-                                
-                                self.performSegueWithIdentifier("goToKeypad", sender: json)
+                                self.performSegueWithIdentifier("showClock", sender: json)
                                 
                             } else {
                                 print(self.switchCode(success))
@@ -122,7 +182,6 @@ class ViewController: UIViewController {
                                     print("Ok pressed")
                                     
                                 }
-                                
                                 
                                 alert.addAction(ok)
                                 
@@ -150,8 +209,6 @@ class ViewController: UIViewController {
         task.resume()
         
     }
-    
-    
     
     func switchCode(success: Int?) -> String {
         
@@ -186,16 +243,16 @@ class ViewController: UIViewController {
         
     }
     
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "goToKeypad" {
-            let viewController:KeypadViewController = segue.destinationViewController as! KeypadViewController
-            viewController.JSONFromLogin = sender as! [String : AnyObject]
+        if segue.identifier == "showClock" {
+            let viewController:ClockViewController = segue.destinationViewController as! ClockViewController
+            viewController.JSONFromKeypad = sender as! [String : AnyObject]
             viewController.isSuperUser = self.isSuperUser
         }
     }
+
     
 
 
-}
 
+}
