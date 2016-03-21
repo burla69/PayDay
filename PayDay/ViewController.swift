@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     let baseURL = "http://ec2-52-34-242-50.us-west-2.compute.amazonaws.com"
     
     var isSuperUser = 0
+    var userOption = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,6 +109,7 @@ class ViewController: UIViewController {
                                 
                                 let user = (json["user"] as? [String : AnyObject])!
                                 self.isSuperUser = (user["is_superuser"] as? Int)!
+                                self.userOption = (user["option"] as? Int)!
                                 
                                 
                                 self.performSegueWithIdentifier("goToKeypad", sender: json)
@@ -192,6 +194,7 @@ class ViewController: UIViewController {
             let viewController:KeypadViewController = segue.destinationViewController as! KeypadViewController
             viewController.JSONFromLogin = sender as! [String : AnyObject]
             viewController.isSuperUser = self.isSuperUser
+            viewController.userOption = self.userOption
         }
     }
     

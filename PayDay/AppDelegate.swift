@@ -29,6 +29,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        //Изменяем цвет элементов статус бара
 //        UIApplication.sharedApplication().statusBarStyle = .LightContent
         
+        
+        
+        
+        
+        ///////////////////////////
+        
+        let bounds: CGRect = UIScreen.mainScreen().bounds
+        let screenHeight = bounds.size.height
+        
+        var mainView: UIStoryboard!
+        
+        
+        if screenHeight <= 568  {
+            // Load Storyboard with name: iPhone4
+            var mainView: UIStoryboard!
+            mainView = UIStoryboard(name: "Storyboard2", bundle: nil)
+            let viewcontroller : UIViewController = mainView.instantiateViewControllerWithIdentifier("iPhone35") as UIViewController
+            self.window!.rootViewController = viewcontroller
+            
+        } else if screenHeight > 568 {
+            mainView = UIStoryboard(name: "Main", bundle: nil)
+            let viewcontroller : UIViewController = mainView.instantiateViewControllerWithIdentifier("iPhone6") as UIViewController
+            self.window!.rootViewController = viewcontroller
+        }
+        
+        ///////////////////////////////
+        
+        
+        
+        
+        
+        
+        
         return true
     }
 

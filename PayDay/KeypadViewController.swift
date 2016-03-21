@@ -21,6 +21,7 @@ class KeypadViewController: UIViewController, QRScanningViewControllerDelegate {
     var time = ""
     var date = ""
     var tmsIDtemp = ""
+    var userOption = 0
     
     let baseURL = "http://ec2-52-34-242-50.us-west-2.compute.amazonaws.com"
     
@@ -43,8 +44,7 @@ class KeypadViewController: UIViewController, QRScanningViewControllerDelegate {
     @IBAction func numberButtonPressed(sender: UIButton) {
         
         let digit = sender.currentTitle!
-        //Notice use of ternery operator in below line which results in a single line code
-        //instead of usual if-else multiple lines
+        
         TmsID.text = isFirstDigit ? digit : TmsID.text! + digit
         isFirstDigit = false
         
@@ -167,7 +167,7 @@ class KeypadViewController: UIViewController, QRScanningViewControllerDelegate {
                                         
                     if let success = json["status"] as? Int {
                         print(success)
-                        print(json)
+                        //print(json)
                         dispatch_async(dispatch_get_main_queue(), {
                             if success == 0 {
                                 
@@ -249,6 +249,7 @@ class KeypadViewController: UIViewController, QRScanningViewControllerDelegate {
             let viewController:ClockViewController = segue.destinationViewController as! ClockViewController
             viewController.JSONFromKeypad = sender as! [String : AnyObject]
             viewController.isSuperUser = self.isSuperUser
+            viewController.userOption = self.userOption
         }
     }
 

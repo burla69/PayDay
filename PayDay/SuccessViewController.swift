@@ -37,10 +37,34 @@ class SuccessViewController: UIViewController {
         self.nameLabel.text = "Hi, \(name)"
         self.dateLabel.text = date
         self.timeLabel.text = time
-        self.statusLabel.text = statusSuccess == "CLOCK_IN" ? "You have successfully CLOCKED IN at" : "You have successfully CLOCKED OUT at"
+
+        
+        var statusText = "NO STATUS"
+        
+        if statusSuccess == "CLOCK IN" {
+            statusText = "You have successfully CLOCKED IN at"
+
+        } else if statusSuccess == "CLOCK OUT" {
+            statusText = "You have successfully CLOCKED OUT at"
+            
+        } else if statusSuccess == "START BREAK" {
+            statusText = "You have successfully BREAKED IN at"
+            
+        } else if statusSuccess == "STOP BREAK" {
+            statusText = "You have successfully BREAKED OUT at"
+            
+        } else if statusSuccess == "DUTY IN" {
+            statusText = "You have successfully DUTY IN at"
+            
+        } else if statusSuccess == "DUTY OUT" {
+            statusText = "You have successfully DUTY OUT at"
+            
+        }
+        
+        self.statusLabel.text = statusText
+        
         self.locationLabel.text = location
 
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {

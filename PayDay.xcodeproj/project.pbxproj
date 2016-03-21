@@ -35,6 +35,7 @@
 		FA6225E81C981126000FC532 /* KeypadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6225E71C981126000FC532 /* KeypadViewController.swift */; };
 		FA6225EA1C982C85000FC532 /* QRScanningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6225E91C982C84000FC532 /* QRScanningViewController.swift */; };
 		FA6225EC1C985339000FC532 /* ClockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6225EB1C985339000FC532 /* ClockViewController.swift */; };
+		FA9DE4471CA00F01002202C5 /* Storyboard2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA9DE4461CA00F01002202C5 /* Storyboard2.storyboard */; };
 		FABE561B1C9AF8AB00A1C6F3 /* SuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABE561A1C9AF8AB00A1C6F3 /* SuccessViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +72,7 @@
 		FA6225E71C981126000FC532 /* KeypadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeypadViewController.swift; sourceTree = "<group>"; };
 		FA6225E91C982C84000FC532 /* QRScanningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScanningViewController.swift; sourceTree = "<group>"; };
 		FA6225EB1C985339000FC532 /* ClockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockViewController.swift; sourceTree = "<group>"; };
+		FA9DE4461CA00F01002202C5 /* Storyboard2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard2.storyboard; sourceTree = "<group>"; };
 		FABE561A1C9AF8AB00A1C6F3 /* SuccessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -132,6 +134,7 @@
 				FA6225EB1C985339000FC532 /* ClockViewController.swift */,
 				FABE561A1C9AF8AB00A1C6F3 /* SuccessViewController.swift */,
 				FA6225B01C97F4EC000FC532 /* Main.storyboard */,
+				FA9DE4461CA00F01002202C5 /* Storyboard2.storyboard */,
 				FA6225B31C97F4EC000FC532 /* Assets.xcassets */,
 				FA6225B51C97F4EC000FC532 /* LaunchScreen.storyboard */,
 				FA6225B81C97F4EC000FC532 /* Info.plist */,
@@ -245,6 +248,7 @@
 				FA6225E61C97F5F1000FC532 /* main_logo.png in Resources */,
 				FA6225E41C97F5F1000FC532 /* main_background.png in Resources */,
 				FA6225E31C97F5F1000FC532 /* ic_shedule.png in Resources */,
+				FA9DE4471CA00F01002202C5 /* Storyboard2.storyboard in Resources */,
 				FA6225DB1C97F5F1000FC532 /* ic_clock_in.png in Resources */,
 				FA6225DF1C97F5F1000FC532 /* ic_location.png in Resources */,
 				FA6225D71C97F5F1000FC532 /* ic_backspace.png in Resources */,

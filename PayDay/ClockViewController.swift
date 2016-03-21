@@ -18,8 +18,6 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     @IBOutlet weak var fullDateLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     
-    @IBOutlet weak var menuButton: UIBarButtonItem!
-    
     @IBOutlet weak var clockInButton: UIButton!
     @IBOutlet weak var clockOutButton: UIButton!
     @IBOutlet weak var clockInLabel: UILabel!
@@ -48,6 +46,7 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     var time = ""
     var date = ""
     var base64String = ""
+    var userOption = 0
     
     
     
@@ -65,37 +64,55 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         self.fullDateLabel.text = date
         
         
-        let view = UIView(frame: CGRectMake(self.view.frame.maxX - 100, 60,100,100))
+        let view = UIView(frame: CGRectMake(self.view.frame.maxX - 150, 60,100,100))
         self.view.addSubview(view)
         dropDown.anchorView = view
         dropDown.direction = .Any
-        dropDown.width = 100
-        dropDown.dataSource = ["Break", "Call Back for Duty"]
+        dropDown.width = 150
         
         
+        let rightMenuButton = UIBarButtonItem(title: "Menu", style: UIBarButtonItemStyle.Plain, target: self, action: "rightMenuItemSelected")
+        rightMenuButton.tintColor = UIColor(red:0.98, green:0.75, blue:0.00, alpha:1.0)
         
-        
-        //дописать в понедельник
-        
-        dropDown.selectionAction = { (index, item) in
-            print("item \(item) at index \(index) selected.")
-            
-            if index == 0 {
-                self.clockInButton.backgroundColor = UIColor(red:0.98, green:0.75, blue:0.00, alpha:1.0)
-                self.clockInButton.titleLabel?.text = "Break In"
-                self.clockOutButton.titleLabel?.text = "Break Out"
-                
-                
-            } else if index == 1{
-                self.clockInButton.titleLabel?.text = "Duty In"
-                self.clockOutButton.titleLabel?.text = "Duty Out"
-
-            }
-            
+        if self.userOption == 0 {
+            print("user option = 0")
+        } else if self.userOption == 1 {
+            print("user option = 1")
+        } else if self.userOption == 2 {
+            print("user option = 2")
+            dropDown.dataSource = ["Break"]
+            self.navigationItem.setRightBarButtonItem(rightMenuButton, animated: false);
+        } else if self.userOption == 3 {
+            print("user option = 3")
+            dropDown.dataSource = ["Break", "Call Back for Duty"]
+            self.navigationItem.setRightBarButtonItem(rightMenuButton, animated: false);
         }
         
         
         
+        
+        
+        
+        
+        dropDown.selectionAction = { (index, item) in
+            
+            if index == 0 {
+                self.clockInButton.backgroundColor = UIColor(red:0.98, green:0.75, blue:0.00, alpha:1.0)
+                self.clockInLabel.text = "START BREAK"
+                self.clockInLabel.textColor = UIColor(red:0.98, green:0.75, blue:0.00, alpha:1.0)
+                self.clockOutLabel.text = "STOP BREAK"
+                
+                
+            } else if index == 1{
+                self.clockInButton.backgroundColor = UIColor(red:0.00, green:0.62, blue:0.23, alpha:1.0)
+                self.clockInLabel.text = "DUTY IN"
+                self.clockInLabel.textColor = UIColor(red:0.00, green:0.62, blue:0.23, alpha:1.0)
+                self.clockOutLabel.text = "DUTY OUT"
+
+            }
+            
+        }
+                
     }
     
     
@@ -136,15 +153,13 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         }
         
     }
-    
-    
+
     
     @IBAction func clockInPressed(sender: UIButton) {
         
-        print((sender.titleLabel?.text)!)
+        let message = (self.clockInLabel.text)!
         
-        
-        let alert = UIAlertController(title: "Clock in", message: "Confirm to CLOCK IN?", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: message, message: "Confirm to \(message)", preferredStyle: UIAlertControllerStyle.Alert)
         
         let cancel = UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: nil)
         
@@ -152,11 +167,31 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
             
             self.takePhoto()
             
+            var checkInType = ""
+            
+            if (self.clockInLabel.text)! == "CLOCK IN" {
+                checkInType = "Check In"
+            } else if (self.clockInLabel.text)! == "CLOCK OUT" {
+                checkInType = "Check Out"
+            } else if (self.clockInLabel.text)! == "START BREAK" {
+                checkInType = "Break In"
+            } else if (self.clockInLabel.text)! == "START STOP" {
+                checkInType = "Break Out"
+            } else if (self.clockInLabel.text)! == "DUTY IN" {
+                checkInType = "Duty In"
+            } else if (self.clockInLabel.text)! == "DUTY OUT" {
+                checkInType = "Duty Out"
+            }
+            
+            
             let params = [          "token": self.token,
-                            "check_in_type": "Check In",
+                            "check_in_type": checkInType,
                                     "photo": self.base64String]
             
-            self.postRequest("/api/v1/users/check-in/", params: params, type: "CLOCK_IN")
+            
+            print((self.clockInButton.titleLabel?.text)!)
+            
+            self.postRequest("/api/v1/users/check-in/", params: params, type: message)
             
         }
         
@@ -170,7 +205,9 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     
     @IBAction func clockOutPressed(sender: UIButton) {
         
-        let alert = UIAlertController(title: "Clock out", message: "Confirm to CLOCK OUT?", preferredStyle: UIAlertControllerStyle.Alert)
+        let message = (self.clockOutLabel.text)!
+        
+        let alert = UIAlertController(title: message, message: "Confirm to \(message)", preferredStyle: UIAlertControllerStyle.Alert)
         
         let cancel = UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: nil)
         
@@ -179,12 +216,11 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
             self.takePhoto()
             
             let params = [          "token": self.token,
-                                    "check_in_type": "Check Out",
+                                    "check_in_type": (sender.titleLabel?.text)!,
                                     "photo": self.base64String]
             
             
-            self.postRequest("/api/v1/users/check-in/", params: params, type: "CLOCK_OUT")
-            
+            self.postRequest("/api/v1/users/check-in/", params: params, type: message)
             
             
         }
@@ -198,9 +234,9 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     }
     
     
-    @IBAction func breakPressed(sender: UIBarButtonItem) {
-        
+    func rightMenuItemSelected() {
         dropDown.show()
+
     }
     
     
@@ -268,7 +304,6 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                                 let dopDataArray = [json, type, self.firstName]
                                 
                                 self.performSegueWithIdentifier("showSuccess", sender: dopDataArray)
-                                print("work")
 
                                 
                             } else {
