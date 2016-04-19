@@ -8,7 +8,8 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+
+class ViewController: UIViewController{
     
     
     @IBOutlet weak var companyTextField: UITextField!
@@ -17,6 +18,8 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var passwordTextField: UITextField!
     
+    
+        
     let baseURL = "http://ec2-52-34-242-50.us-west-2.compute.amazonaws.com"
     
     var isSuperUser = 0
@@ -25,6 +28,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+
         
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
@@ -32,7 +36,7 @@ class ViewController: UIViewController {
         self.navigationController?.navigationBar.translucent = true
         
         
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: "viewTapped")
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         self.view.addGestureRecognizer(gestureRecognizer)
         
         
@@ -91,6 +95,19 @@ class ViewController: UIViewController {
         let task = session.dataTaskWithRequest(request) { data, response, error in
             guard data != nil else {
                 print("no data found: \(error)")
+
+                dispatch_async(dispatch_get_main_queue(), { 
+                    let alert = UIAlertController(title: "Authentication error", message: "Can not load data from web. Please check your Internet conection and try again later.", preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    let cancel = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
+                    
+                    alert.addAction(cancel)
+                    
+                    self.presentViewController(alert, animated: false, completion: nil)
+                })
+                
+                
+                
                 return
             }
             
@@ -172,7 +189,7 @@ class ViewController: UIViewController {
         case 4:
             return "Incorrect IP for this company";
         case 5:
-            return "Incorrect data";
+            return "User with that username doesn't exist";
         case 6:
             return "Token doesn't exist";
         case 7:
@@ -183,7 +200,7 @@ class ViewController: UIViewController {
             return "There is not users in this company!";
         case 13:
             return "Company doesn't allow employee device login";
-        default: return "=======";
+        default: return "Incorrect data";
         }
         
     }
@@ -197,6 +214,7 @@ class ViewController: UIViewController {
             viewController.userOption = self.userOption
         }
     }
+
     
 
 

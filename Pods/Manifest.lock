@@ -1,10 +1,13 @@
 PODS:
   - DropDown (0.1.4)
+  - SideMenu (1.1.5)
 
 DEPENDENCIES:
   - DropDown
+  - SideMenu
 
 SPEC CHECKSUMS:
   DropDown: 09ab078ba0f11d426689526b45d4d5179420e321
+  SideMenu: c7eb4edeb570469a70c6503306f5a97df08e8e9d
 
 COCOAPODS: 0.39.0

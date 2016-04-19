@@ -16,12 +16,14 @@ class SuccessViewController: UIViewController {
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var ampmLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     
     var name = ""
     var statusSuccess = ""
     var date = ""
     var time = ""
+    var ampmText = ""
     var location = ""
     
     var isSuperUser = 0
@@ -37,27 +39,32 @@ class SuccessViewController: UIViewController {
         self.nameLabel.text = "Hi, \(name)"
         self.dateLabel.text = date
         self.timeLabel.text = time
-
         
         var statusText = "NO STATUS"
         
         if statusSuccess == "CLOCK IN" {
-            statusText = "You have successfully CLOCKED IN at"
+            statusText = "CLOCKED IN"
+            self.statusLabel.textColor = UIColor(red:0.00, green:0.62, blue:0.23, alpha:1.0)
 
         } else if statusSuccess == "CLOCK OUT" {
-            statusText = "You have successfully CLOCKED OUT at"
+            statusText = "CLOCKED OUT"
+            self.statusLabel.textColor = UIColor(red:0.78, green:0.14, blue:0.14, alpha:1.0)
             
         } else if statusSuccess == "START BREAK" {
-            statusText = "You have successfully BREAKED IN at"
+            statusText = "BREAKED IN"
+            self.statusLabel.textColor = UIColor(red:0.98, green:0.75, blue:0.00, alpha:1.0)
             
         } else if statusSuccess == "STOP BREAK" {
-            statusText = "You have successfully BREAKED OUT at"
+            statusText = "BREAKED OUT"
+            self.statusLabel.textColor = UIColor(red:0.78, green:0.14, blue:0.14, alpha:1.0)
             
         } else if statusSuccess == "DUTY IN" {
-            statusText = "You have successfully DUTY IN at"
+            statusText = "DUTY IN"
+            self.statusLabel.textColor = UIColor(red:0.00, green:0.62, blue:0.23, alpha:1.0)
             
         } else if statusSuccess == "DUTY OUT" {
-            statusText = "You have successfully DUTY OUT at"
+            statusText = "DUTY OUT"
+            self.statusLabel.textColor = UIColor(red:0.78, green:0.14, blue:0.14, alpha:1.0)
             
         }
         
@@ -76,7 +83,9 @@ class SuccessViewController: UIViewController {
     func updateDataFrom(json: [String : AnyObject]) {
         
         self.location = (json["location"] as? String)!
-        self.time = (json["time"] as? String)!
+        let timeText = (json["time"] as? NSString)!
+        self.ampmText = timeText.substringFromIndex(timeText.length - 2)
+        self.time = timeText.substringToIndex(timeText.length - 2)
         self.date = (json["date"] as? String)!
         
     }

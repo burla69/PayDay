@@ -13,8 +13,13 @@ import DropDown
 
 class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
+    
+    let group = dispatch_group_create()
+
+    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var ampmLabel: UILabel!
     @IBOutlet weak var fullDateLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     
@@ -22,6 +27,12 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     @IBOutlet weak var clockOutButton: UIButton!
     @IBOutlet weak var clockInLabel: UILabel!
     @IBOutlet weak var clockOutLabel: UILabel!
+    
+    
+    var qrCodeFrameView: UIView?
+    
+    var isDetectedFace: Bool = false
+
     
     let dropDown = DropDown()
     
@@ -44,6 +55,7 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     var firstName = ""
     var lastName = ""
     var time = ""
+    var ampmText = ""
     var date = ""
     var base64String = ""
     var userOption = 0
@@ -60,6 +72,9 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         
         self.nameLabel.text = "Hi, \(firstName)"
         self.timeLabel.text = time
+        self.ampmLabel.text = ampmText
+        
+        
         self.locationLabel.text = location
         self.fullDateLabel.text = date
         
@@ -71,37 +86,51 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         dropDown.width = 150
         
         
-        let rightMenuButton = UIBarButtonItem(title: "Menu", style: UIBarButtonItemStyle.Plain, target: self, action: "rightMenuItemSelected")
+        let rightMenuButton = UIBarButtonItem(title: "Menu", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(rightMenuItemSelected))
         rightMenuButton.tintColor = UIColor(red:0.98, green:0.75, blue:0.00, alpha:1.0)
         
         if self.userOption == 0 {
             print("user option = 0")
         } else if self.userOption == 1 {
             print("user option = 1")
+            dropDown.dataSource = ["Break"]
+            self.navigationItem.setRightBarButtonItem(rightMenuButton, animated: false);
         } else if self.userOption == 2 {
             print("user option = 2")
-            dropDown.dataSource = ["Break"]
+            dropDown.dataSource = ["Call Back Duty"]
             self.navigationItem.setRightBarButtonItem(rightMenuButton, animated: false);
         } else if self.userOption == 3 {
             print("user option = 3")
-            dropDown.dataSource = ["Break", "Call Back for Duty"]
+            dropDown.dataSource = ["Break", "Call Back Duty"]
             self.navigationItem.setRightBarButtonItem(rightMenuButton, animated: false);
         }
         
-        
-        
-        
-        
-        
+
         
         dropDown.selectionAction = { (index, item) in
             
+//            if index == 0 {
+//                self.clockInButton.backgroundColor = UIColor(red:0.00, green:0.62, blue:0.23, alpha:1.0)
+//                self.clockInLabel.text = "CLOCK IN"
+//                self.clockInLabel.textColor = UIColor(red:0.00, green:0.62, blue:0.23, alpha:1.0)
+//                self.clockOutLabel.text = "CLOCK OUT"
+//                
+//            }else
+            
             if index == 0 {
-                self.clockInButton.backgroundColor = UIColor(red:0.98, green:0.75, blue:0.00, alpha:1.0)
-                self.clockInLabel.text = "START BREAK"
-                self.clockInLabel.textColor = UIColor(red:0.98, green:0.75, blue:0.00, alpha:1.0)
-                self.clockOutLabel.text = "STOP BREAK"
                 
+                if (item == "Break") {
+                    self.clockInButton.backgroundColor = UIColor(red:0.98, green:0.75, blue:0.00, alpha:1.0)
+                    self.clockInLabel.text = "START BREAK"
+                    self.clockInLabel.textColor = UIColor(red:0.98, green:0.75, blue:0.00, alpha:1.0)
+                    self.clockOutLabel.text = "STOP BREAK"
+                    
+                } else if ((item == "Call Back Duty")) {
+                    self.clockInButton.backgroundColor = UIColor(red:0.00, green:0.62, blue:0.23, alpha:1.0)
+                    self.clockInLabel.text = "DUTY IN"
+                    self.clockInLabel.textColor = UIColor(red:0.00, green:0.62, blue:0.23, alpha:1.0)
+                    self.clockOutLabel.text = "DUTY OUT"
+                }
                 
             } else if index == 1{
                 self.clockInButton.backgroundColor = UIColor(red:0.00, green:0.62, blue:0.23, alpha:1.0)
@@ -116,6 +145,12 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     }
     
     
+    override func viewDidDisappear(animated: Bool) {
+        viewDidAppear(animated)
+        captureSession?.stopRunning()
+    }
+    
+    
     
     func showVideoView() {
         guard
@@ -125,9 +160,26 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
             else { return }
         
         do {
+            
+
             let input = try AVCaptureDeviceInput(device: captureDevice)
             captureSession = AVCaptureSession()
             captureSession?.addInput(input)
+            
+            
+            
+           ///
+ 
+            let metadataOutput = AVCaptureMetadataOutput()
+            metadataOutput.setMetadataObjectsDelegate(self, queue:dispatch_get_main_queue()!)
+            if captureSession!.canAddOutput(metadataOutput) {
+                captureSession!.addOutput(metadataOutput)
+            }
+            metadataOutput.metadataObjectTypes = [AVMetadataObjectTypeFace]
+            
+            /////
+            
+            
             
             videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
             videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
@@ -136,7 +188,6 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
             
             captureSession?.startRunning()
             
-            //
             let stillImageOutput: AVCaptureStillImageOutput = AVCaptureStillImageOutput()
             if captureSession!.canAddOutput(stillImageOutput){
                 stillImageOutput.outputSettings = [AVVideoCodecKey: AVVideoCodecJPEG]
@@ -144,8 +195,21 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 
                 self.stillImageOutput = stillImageOutput
             }
-            //
             
+            
+            qrCodeFrameView = UIView()
+            
+            if let qrCodeFrameView = qrCodeFrameView {
+                qrCodeFrameView.layer.borderColor = UIColor.greenColor().CGColor
+                qrCodeFrameView.layer.borderWidth = 3
+                
+                cameraView.addSubview(qrCodeFrameView)
+                cameraView.bringSubviewToFront(qrCodeFrameView)
+            } else {
+                qrCodeFrameView?.removeFromSuperview()
+            }
+            
+
             
         } catch {
             print(error)
@@ -153,83 +217,159 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         }
         
     }
+    
+    
+    func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
+        
+        if metadataObjects == nil || metadataObjects.count == 0 {
+            qrCodeFrameView?.frame = CGRectZero
+            
+            print("Face is not detected")
+            self.isDetectedFace = false
+            
+            return
+        }
+        
+        for metadataObject in metadataObjects as! [AVMetadataObject] {
+            if metadataObject.type == AVMetadataObjectTypeFace {
+                
+                print("Face detected")
+                self.isDetectedFace = true
+
+                let transformedMetadataObject = videoPreviewLayer!.transformedMetadataObjectForMetadataObject(metadataObject)
+                self.qrCodeFrameView?.frame = transformedMetadataObject!.bounds
+                
+            }
+        }
+        
+    }
+    
+    
+
+    
 
     
     @IBAction func clockInPressed(sender: UIButton) {
         
-        let message = (self.clockInLabel.text)!
         
-        let alert = UIAlertController(title: message, message: "Confirm to \(message)", preferredStyle: UIAlertControllerStyle.Alert)
-        
-        let cancel = UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: nil)
-        
-        let ok = UIAlertAction(title: "Yes", style: .Default) { (action) -> Void in
+        if isDetectedFace {
+            let message = (self.clockInLabel.text)!
             
-            self.takePhoto()
+            let alert = UIAlertController(title: message, message: "Confirm to \(message)", preferredStyle: UIAlertControllerStyle.Alert)
             
-            var checkInType = ""
+            let cancel = UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: nil)
             
-            if (self.clockInLabel.text)! == "CLOCK IN" {
-                checkInType = "Check In"
-            } else if (self.clockInLabel.text)! == "CLOCK OUT" {
-                checkInType = "Check Out"
-            } else if (self.clockInLabel.text)! == "START BREAK" {
-                checkInType = "Break In"
-            } else if (self.clockInLabel.text)! == "START STOP" {
-                checkInType = "Break Out"
-            } else if (self.clockInLabel.text)! == "DUTY IN" {
-                checkInType = "Duty In"
-            } else if (self.clockInLabel.text)! == "DUTY OUT" {
-                checkInType = "Duty Out"
+            let ok = UIAlertAction(title: "Yes", style: .Default) { (action) -> Void in
+                
+                if self.isDetectedFace {
+                    self.takePhoto()
+                    
+                    var checkInType = ""
+                    
+                    if (self.clockInLabel.text)! == "CLOCK IN" {
+                        checkInType = "Check In"
+                    } else if (self.clockInLabel.text)! == "START BREAK" {
+                        checkInType = "Break In"
+                    } else if (self.clockInLabel.text)! == "DUTY IN" {
+                        checkInType = "Duty In"
+                    }
+                    
+                    
+                    dispatch_group_enter(self.group)
+                    self.asyncTaskSimulation(10.0) { (delay) in
+                        print("Second task after \(delay)s")
+                        let params = [          "token": self.token,
+                                                "check_in_type": checkInType,
+                                                "photo": self.base64String]
+                        self.postRequest("/api/v1/users/check-in/", params: params, type: message)
+                        dispatch_group_leave(self.group)
+                    }
+                }
+                
+                
             }
             
+            alert.addAction(ok)
             
-            let params = [          "token": self.token,
-                            "check_in_type": checkInType,
-                                    "photo": self.base64String]
+            alert.addAction(cancel)
             
             
-            print((self.clockInButton.titleLabel?.text)!)
-            
-            self.postRequest("/api/v1/users/check-in/", params: params, type: message)
-            
+            if Reachability.isConnectedToNetwork() {
+                self.presentViewController(alert, animated: true, completion: nil)
+            } else {
+                dispatch_async(dispatch_get_main_queue(), {
+                    let alert = UIAlertController(title: "Authentication error", message: "Please check your Internet conection and try again later.", preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    let cancel = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
+                    
+                    alert.addAction(cancel)
+                    
+                    self.presentViewController(alert, animated: false, completion: nil)
+                })
+            }
         }
-        
-        alert.addAction(ok)
-        
-        alert.addAction(cancel)
-        
-        self.presentViewController(alert, animated: true, completion: nil)
         
     }
     
     @IBAction func clockOutPressed(sender: UIButton) {
         
-        let message = (self.clockOutLabel.text)!
-        
-        let alert = UIAlertController(title: message, message: "Confirm to \(message)", preferredStyle: UIAlertControllerStyle.Alert)
-        
-        let cancel = UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: nil)
-        
-        let ok = UIAlertAction(title: "Yes", style: .Default) { (action) -> Void in
+        if isDetectedFace {
+            let message = (self.clockOutLabel.text)!
             
-            self.takePhoto()
+            let alert = UIAlertController(title: message, message: "Confirm to \(message)", preferredStyle: UIAlertControllerStyle.Alert)
             
-            let params = [          "token": self.token,
-                                    "check_in_type": (sender.titleLabel?.text)!,
-                                    "photo": self.base64String]
+            let cancel = UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: nil)
             
+            let ok = UIAlertAction(title: "Yes", style: .Default) { (action) -> Void in
+                
+                if self.isDetectedFace {
+                    self.takePhoto()
+                    
+                    var checkInType = ""
+                    
+                    if (self.clockOutLabel.text)! == "CLOCK OUT" {
+                        checkInType = "Check Out"
+                    } else if (self.clockOutLabel.text)! == "STOP BREAK" {
+                        checkInType = "Break Out"
+                    } else if (self.clockOutLabel.text)! == "DUTY OUT" {
+                        checkInType = "Duty Out"
+                    }
+                    
+                    
+                    dispatch_group_enter(self.group)
+                    self.asyncTaskSimulation(10.0) { (delay) in
+                        print("Second task after \(delay)s")
+                        let params = [          "token": self.token,
+                                                "check_in_type": checkInType,
+                                                "photo": self.base64String]
+                        
+                        self.postRequest("/api/v1/users/check-in/", params: params, type: message)
+                        dispatch_group_leave(self.group)
+                    }
+                }
+                
+                
+                
+            }
             
-            self.postRequest("/api/v1/users/check-in/", params: params, type: message)
+            alert.addAction(ok)
             
+            alert.addAction(cancel)
             
+            if Reachability.isConnectedToNetwork() {
+                self.presentViewController(alert, animated: true, completion: nil)
+            } else {
+                dispatch_async(dispatch_get_main_queue(), {
+                    let alert = UIAlertController(title: "Authentication error", message: "Please check your Internet conection and try again later.", preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    let cancel = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
+                    
+                    alert.addAction(cancel)
+                    
+                    self.presentViewController(alert, animated: false, completion: nil)
+                })
+            }
         }
-        
-        alert.addAction(ok)
-        
-        alert.addAction(cancel)
-        
-        self.presentViewController(alert, animated: true, completion: nil)
         
     }
     
@@ -244,7 +384,11 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         
         self.location = (json["location"] as? String)!
         self.token = (json["token"] as? String)!
-        self.time = (json["time"] as? String)!
+        let timeText = (json["time"] as? NSString)!
+        
+        self.ampmText = timeText.substringFromIndex(timeText.length - 2)
+        self.time = timeText.substringToIndex(timeText.length - 2)
+        
         self.date = (json["date"] as? String)!
         let user = (json["user"] as? [String : AnyObject])!
         self.firstName = (user["first_name"] as? String)!
@@ -285,6 +429,7 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         let task = session.dataTaskWithRequest(request) { data, response, error in
             guard data != nil else {
                 print("no data found: \(error)")
+
                 return
             }
             
@@ -397,19 +542,54 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
     
     func takePhoto() {
         
-        self.stillImageOutput.captureStillImageAsynchronouslyFromConnection(self.stillImageOutput.connectionWithMediaType(AVMediaTypeVideo)) { (buffer:CMSampleBuffer!, error:NSError!) -> Void in
-            let image = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(buffer)
-            let data_image = UIImage(data: image)
-            self.captureSession?.stopRunning()
-            self.activityIndicator.startAnimating()
+        
+        if (self.captureSession != nil) {
+            
+            
+            asyncTaskSimulation(0.0) { (delay) in
+                print("First task after \(delay)s")
+                
+                
+                self.stillImageOutput.captureStillImageAsynchronouslyFromConnection(self.stillImageOutput.connectionWithMediaType(AVMediaTypeVideo)) { (buffer:CMSampleBuffer!, error:NSError!) -> Void in
+                    
+                    if (buffer != nil) {
+                        let image = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(buffer)
+                        let data_image = UIImage(data: image)
+                        self.captureSession?.stopRunning()
+                        self.activityIndicator.startAnimating()
+                        
+                        let imageData = UIImagePNGRepresentation(data_image!)
+                        
+                        self.base64String = imageData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+                        
+                        print("take image")
+                        
+                        
+                        
+                    } else {
+                        print(error)
+                    }
+                    
+                }
 
+                
+                
+                dispatch_group_leave(self.group)
+            }
             
-            let imageData = UIImagePNGRepresentation(data_image!)
-            self.base64String = imageData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
-            
-            
+
+        } else {
+            print("No camera")
         }
         
+    }
+    
+    
+    func asyncTaskSimulation(delay: NSTimeInterval, completion: (NSTimeInterval) -> ()) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+            Int64(delay * Double(NSEC_PER_SEC))), dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)) {
+                completion(delay)
+        }
     }
     
 }

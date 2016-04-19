@@ -26,7 +26,11 @@ class KeypadViewController: UIViewController, QRScanningViewControllerDelegate {
     let baseURL = "http://ec2-52-34-242-50.us-west-2.compute.amazonaws.com"
     
     var isSuperUser = 0
+    
+    
+    @IBOutlet weak var whiteView: UIView!
 
+    @IBOutlet weak var keyPadButton1: UIButton!
     
     @IBOutlet weak var timeLabel: UILabel!
     
@@ -37,6 +41,8 @@ class KeypadViewController: UIViewController, QRScanningViewControllerDelegate {
     @IBOutlet weak var myNavigationItem: UINavigationItem!
     
     @IBOutlet weak var TmsID: UITextField!
+    
+    @IBOutlet weak var ampmLabel: UILabel!
     
     var isFirstDigit = true
 
@@ -69,12 +75,16 @@ class KeypadViewController: UIViewController, QRScanningViewControllerDelegate {
     
     @IBAction func okButton(sender: UIButton) {
         
+        goFromQRCode()
+        
+    }
+    
+    
+    func goFromQRCode() {
         let params = ["token": self.token, "user_identifier": TmsID.text!]
         
-        
-       self.postRequest("/api/v1/users/identify/", params: params)
-        
-        
+        self.postRequest("/api/v1/users/identify/", params: params)
+ 
     }
     
     
@@ -84,22 +94,40 @@ class KeypadViewController: UIViewController, QRScanningViewControllerDelegate {
 
         // Do any additional setup after loading the view.
         
-        NSTimer.scheduledTimerWithTimeInterval(59, target: self, selector: "showTime", userInfo: nil, repeats: true)
+        showTime()
+        NSTimer.scheduledTimerWithTimeInterval(59, target: self, selector: #selector(showTime), userInfo: nil, repeats: true)
         
         updateDataFrom(JSONFromLogin)
         
-        self.timeLabel.text = time
         self.locationLabel.text = location
         self.dateLabel.text = date
+        
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        //keyPadButton1.layoutSubviews()
+    }
+    
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
         
     }
     
     func showTime() {
         let date = NSDate()
         let outputFormat = NSDateFormatter()
-        outputFormat.locale = NSLocale(localeIdentifier:"en_US")
-        outputFormat.dateFormat = "hh:mm a"
+        //outputFormat.locale = NSLocale(localeIdentifier:"en_US")
+        outputFormat.dateFormat = "hh:mm"
         timeLabel.text = outputFormat.stringFromDate(date)
+        
+        outputFormat.dateFormat = "a"
+        ampmLabel.text = outputFormat.stringFromDate(date)
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -119,7 +147,7 @@ class KeypadViewController: UIViewController, QRScanningViewControllerDelegate {
     
 
     @IBAction func unwindToKeypad(segue: UIStoryboardSegue) {
-        
+        self.TmsID.text = ""
     }
     
 
@@ -155,6 +183,19 @@ class KeypadViewController: UIViewController, QRScanningViewControllerDelegate {
         let task = session.dataTaskWithRequest(request) { data, response, error in
             guard data != nil else {
                 print("no data found: \(error)")
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    let alert = UIAlertController(title: "Authentication error", message: "Can not load data from web. Please check your Internet conection and try again later.", preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    let cancel = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
+                    
+                    alert.addAction(cancel)
+                    
+                    self.presentViewController(alert, animated: false, completion: nil)
+                })
+
+                
+                
                 return
             }
             

@@ -11,6 +11,7 @@ import AVFoundation
 
 protocol QRScanningViewControllerDelegate {
     func qrCodeFromQRViewController(string: String)
+    func goFromQRCode()
 }
 
 
@@ -45,7 +46,7 @@ class QRScanningViewController: UIViewController, AVCaptureMetadataOutputObjects
             captureSession?.addOutput(captureMetadataOutput)
             
             captureMetadataOutput.setMetadataObjectsDelegate(self, queue: dispatch_get_main_queue())
-            captureMetadataOutput.metadataObjectTypes = [AVMetadataObjectTypeQRCode]
+            captureMetadataOutput.metadataObjectTypes = [AVMetadataObjectTypeQRCode, AVMetadataObjectTypeCode93Code]
             
             videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
             videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
@@ -92,14 +93,22 @@ class QRScanningViewController: UIViewController, AVCaptureMetadataOutputObjects
         let barCodeObject = videoPreviewLayer?.transformedMetadataObjectForMetadataObject(metadataObj)
         qrCodeFrameView?.frame = barCodeObject!.bounds
         
+        var token: dispatch_once_t = 0
+        dispatch_once(&token) {
+        
         if metadataObj.stringValue != nil {
+            
             print("QR code\(metadataObj.stringValue)")
             
-            self.delegate .qrCodeFromQRViewController(metadataObj.stringValue)
+            self.delegate.qrCodeFromQRViewController(metadataObj.stringValue)
             
-            self.dismissViewControllerAnimated(true, completion: nil)
+            }
+            
+            self.dismissViewControllerAnimated(true, completion: {
+                self.delegate.goFromQRCode()
+
+            })
         }
-        
         
     }
     
