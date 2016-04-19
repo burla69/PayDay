@@ -8,9 +8,6 @@
 
 import UIKit
 
-//add hello
-
-
 class KeypadViewController: UIViewController, QRScanningViewControllerDelegate {
     
     var JSONFromLogin = [String: AnyObject]()

@@ -8,8 +8,13 @@
 
 import UIKit
 
+protocol BurgerMenuTableViewControllerDelegate {
+    func selectedFromBurgerMenuTableViewController(string: String)
+}
+
 class BurgerMenuTableViewController: UITableViewController {
     
+    var delegate: BurgerMenuTableViewControllerDelegate!
     
     var userOption = 0
     var dataSource: NSArray = []
@@ -78,6 +83,13 @@ class BurgerMenuTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        
+        self.delegate.selectedFromBurgerMenuTableViewController((cell?.textLabel?.text)!)
+        
+        dismissViewControllerAnimated(true, completion: nil)
+        
     }
 
 

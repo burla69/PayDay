@@ -12,7 +12,7 @@ import DropDown
 import SideMenu
 
 
-class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, BurgerMenuTableViewControllerDelegate {
     
     
     let group = dispatch_group_create()
@@ -147,6 +147,38 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         SideMenuManager.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
         SideMenuManager.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
                 
+    }
+    
+    func selectedFromBurgerMenuTableViewController(string: String) {
+        print("Selected: \(string)")
+        
+        if (string == "Break") {
+            self.clockInButton.backgroundColor = UIColor(red:0.98, green:0.75, blue:0.00, alpha:1.0)
+            self.clockInLabel.text = "START BREAK"
+            self.clockInLabel.textColor = UIColor(red:0.98, green:0.75, blue:0.00, alpha:1.0)
+            self.clockOutLabel.text = "STOP BREAK"
+            
+        } else if ((string == "Call Back Duty")) {
+            self.clockInButton.backgroundColor = UIColor(red:0.00, green:0.62, blue:0.23, alpha:1.0)
+            self.clockInLabel.text = "DUTY IN"
+            self.clockInLabel.textColor = UIColor(red:0.00, green:0.62, blue:0.23, alpha:1.0)
+            self.clockOutLabel.text = "DUTY OUT"
+            
+        } else if ((string == "Support")) {
+            
+            let alert = UIAlertController(title: "Support:", message: "support@payrollserve.com.sg\n Please contact your HR for more information.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            let cancel = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: nil)
+            
+            alert.addAction(cancel)
+            
+            
+            dispatch_async(dispatch_get_main_queue(), { 
+                self.presentViewController(alert, animated: false, completion: nil)
+            })
+            
+        }
+        
     }
     
     
@@ -550,6 +582,7 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
             let viewControllers: NSArray = navigationController.viewControllers
             let rootController: BurgerMenuTableViewController = viewControllers.firstObject as! BurgerMenuTableViewController
             rootController.userOption = self.userOption
+            rootController.delegate = self
             
         }
         
