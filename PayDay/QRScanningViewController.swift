@@ -26,13 +26,15 @@ class QRScanningViewController: UIViewController, AVCaptureMetadataOutputObjects
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var qrCodeFrameView: UIView?
     
+    var isFrontCamera = true
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         guard
             let captureDevice = (AVCaptureDevice.devices()
-                .filter{ $0.hasMediaType(AVMediaTypeVideo) && $0.position == .Front})
+                .filter{ $0.hasMediaType(AVMediaTypeVideo) && $0.position == .Back})
                 .first as? AVCaptureDevice
             else { return }
         
@@ -69,7 +71,7 @@ class QRScanningViewController: UIViewController, AVCaptureMetadataOutputObjects
             print(error)
             return
         }
-        
+        isFrontCamera = false
         
     }
     
@@ -115,9 +117,100 @@ class QRScanningViewController: UIViewController, AVCaptureMetadataOutputObjects
     @IBAction func useKeyPadPressed(sender: UIButton) {
         
         self.dismissViewControllerAnimated(true, completion: nil)
-
         
     }
+    
+    
+    @IBAction func changeCamera(sender: AnyObject) {
+        
+        if isFrontCamera {
+            guard
+                let captureDevice = (AVCaptureDevice.devices()
+                    .filter{ $0.hasMediaType(AVMediaTypeVideo) && $0.position == .Back})
+                    .first as? AVCaptureDevice
+                else { return }
+            
+            do {
+                let input = try AVCaptureDeviceInput(device: captureDevice)
+                captureSession = AVCaptureSession()
+                captureSession?.addInput(input)
+                
+                
+                let captureMetadataOutput = AVCaptureMetadataOutput()
+                captureSession?.addOutput(captureMetadataOutput)
+                
+                captureMetadataOutput.setMetadataObjectsDelegate(self, queue: dispatch_get_main_queue())
+                captureMetadataOutput.metadataObjectTypes = [AVMetadataObjectTypeQRCode, AVMetadataObjectTypeCode93Code]
+                
+                videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+                videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+                videoPreviewLayer?.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 155)
+                cameraView.layer.addSublayer(videoPreviewLayer!)
+                
+                captureSession?.startRunning()
+                
+                
+                qrCodeFrameView = UIView()
+                
+                if let qrCodeFrameView = qrCodeFrameView {
+                    qrCodeFrameView.layer.borderColor = UIColor.greenColor().CGColor
+                    qrCodeFrameView.layer.borderWidth = 3
+                    
+                    cameraView.addSubview(qrCodeFrameView)
+                    cameraView.bringSubviewToFront(qrCodeFrameView)
+                }
+            } catch {
+                print(error)
+                return
+            }
+            isFrontCamera = false
+            
+        } else {
+            guard
+                let captureDevice = (AVCaptureDevice.devices()
+                    .filter{ $0.hasMediaType(AVMediaTypeVideo) && $0.position == .Front})
+                    .first as? AVCaptureDevice
+                else { return }
+            
+            do {
+                let input = try AVCaptureDeviceInput(device: captureDevice)
+                captureSession = AVCaptureSession()
+                captureSession?.addInput(input)
+                
+                
+                let captureMetadataOutput = AVCaptureMetadataOutput()
+                captureSession?.addOutput(captureMetadataOutput)
+                
+                captureMetadataOutput.setMetadataObjectsDelegate(self, queue: dispatch_get_main_queue())
+                captureMetadataOutput.metadataObjectTypes = [AVMetadataObjectTypeQRCode, AVMetadataObjectTypeCode93Code]
+                
+                videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+                videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+                videoPreviewLayer?.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 155)
+                cameraView.layer.addSublayer(videoPreviewLayer!)
+                
+                captureSession?.startRunning()
+                
+                
+                qrCodeFrameView = UIView()
+                
+                if let qrCodeFrameView = qrCodeFrameView {
+                    qrCodeFrameView.layer.borderColor = UIColor.greenColor().CGColor
+                    qrCodeFrameView.layer.borderWidth = 3
+                    
+                    cameraView.addSubview(qrCodeFrameView)
+                    cameraView.bringSubviewToFront(qrCodeFrameView)
+                }
+            } catch {
+                print(error)
+                return
+            }
+            isFrontCamera = true
+        }
+        
+    }
+    
+    
     
 
     

@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import DropDown
+import SideMenu
 
 
 class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
@@ -94,15 +95,15 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         } else if self.userOption == 1 {
             print("user option = 1")
             dropDown.dataSource = ["Break"]
-            self.navigationItem.setRightBarButtonItem(rightMenuButton, animated: false);
+            //self.navigationItem.setRightBarButtonItem(rightMenuButton, animated: false);
         } else if self.userOption == 2 {
             print("user option = 2")
             dropDown.dataSource = ["Call Back Duty"]
-            self.navigationItem.setRightBarButtonItem(rightMenuButton, animated: false);
+            //self.navigationItem.setRightBarButtonItem(rightMenuButton, animated: false);
         } else if self.userOption == 3 {
             print("user option = 3")
             dropDown.dataSource = ["Break", "Call Back Duty"]
-            self.navigationItem.setRightBarButtonItem(rightMenuButton, animated: false);
+            //self.navigationItem.setRightBarButtonItem(rightMenuButton, animated: false);
         }
         
 
@@ -141,6 +142,10 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
             }
             
         }
+        
+        SideMenuManager.menuFadeStatusBar = false
+        SideMenuManager.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
+        SideMenuManager.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
                 
     }
     
@@ -538,6 +543,17 @@ class ClockViewController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
 
             
         }
+        
+        if segue.identifier == "showMenu" {
+            
+            let navigationController: UISideMenuNavigationController = segue.destinationViewController as! UISideMenuNavigationController
+            let viewControllers: NSArray = navigationController.viewControllers
+            let rootController: BurgerMenuTableViewController = viewControllers.firstObject as! BurgerMenuTableViewController
+            rootController.userOption = self.userOption
+            
+        }
+        
+        
     }
     
     func takePhoto() {
