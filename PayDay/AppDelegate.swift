@@ -19,6 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         
+        if !NSUserDefaults.standardUserDefaults().boolForKey("TermsAccepted") {
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "TermsAccepted")
+        }
+        
+        
         //UITabBar.appearance().tintColor = UIColor(red: 20.0/255.0, green: 20.0/255.0, blue: 20.0/255.0, alpha: 1.0)
         
         DropDown.startListeningToKeyboard()

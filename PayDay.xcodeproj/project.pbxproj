@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		43D3E95B62A7044C06330EF1 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB1258A85CA7EFAC7E31F16 /* Pods.framework */; };
 		FA2BBD751CC62DBC00DA1334 /* BurgerMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2BBD741CC62DBC00DA1334 /* BurgerMenuTableViewController.swift */; };
+		FA2BBD771CC6642000DA1334 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2BBD761CC6642000DA1334 /* TermsViewController.swift */; };
 		FA607E0C1CA0444800748752 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA607E0B1CA0444800748752 /* Reachability.swift */; };
 		FA6225AD1C97F4EC000FC532 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6225AC1C97F4EC000FC532 /* AppDelegate.swift */; };
 		FA6225AF1C97F4EC000FC532 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6225AE1C97F4EC000FC532 /* ViewController.swift */; };
@@ -47,6 +48,7 @@
 		4A4A79C0222742AB64346B08 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		CFF8D04F3CA7A26A15AE66CF /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		FA2BBD741CC62DBC00DA1334 /* BurgerMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BurgerMenuTableViewController.swift; sourceTree = "<group>"; };
+		FA2BBD761CC6642000DA1334 /* TermsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
 		FA607E0B1CA0444800748752 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		FA6225A91C97F4EC000FC532 /* PayDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PayDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA6225AC1C97F4EC000FC532 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -133,8 +135,8 @@
 		FA6225AB1C97F4EC000FC532 /* PayDay */ = {
 			isa = PBXGroup;
 			children = (
-				FAD2AF711CB50913002D5990 /* Help classes */,
 				FA6225AC1C97F4EC000FC532 /* AppDelegate.swift */,
+				FAD2AF711CB50913002D5990 /* Help classes */,
 				FA6225AE1C97F4EC000FC532 /* ViewController.swift */,
 				FA6225E71C981126000FC532 /* KeypadViewController.swift */,
 				FA6225E91C982C84000FC532 /* QRScanningViewController.swift */,
@@ -181,6 +183,7 @@
 			children = (
 				FAD2AF721CB50941002D5990 /* CustomUIButton.swift */,
 				FA2BBD741CC62DBC00DA1334 /* BurgerMenuTableViewController.swift */,
+				FA2BBD761CC6642000DA1334 /* TermsViewController.swift */,
 			);
 			name = "Help classes";
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 				FA6225EA1C982C85000FC532 /* QRScanningViewController.swift in Sources */,
 				FA6225AF1C97F4EC000FC532 /* ViewController.swift in Sources */,
 				FA6225E81C981126000FC532 /* KeypadViewController.swift in Sources */,
+				FA2BBD771CC6642000DA1334 /* TermsViewController.swift in Sources */,
 				FAD2AF731CB50941002D5990 /* CustomUIButton.swift in Sources */,
 				FA6225EC1C985339000FC532 /* ClockViewController.swift in Sources */,
 				FABE561B1C9AF8AB00A1C6F3 /* SuccessViewController.swift in Sources */,

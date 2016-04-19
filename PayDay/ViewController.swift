@@ -41,6 +41,15 @@ class ViewController: UIViewController{
         
         
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        if NSUserDefaults.standardUserDefaults().boolForKey("TermsAccepted") {
+            // Terms have been accepted, proceed as normal
+        } else {
+            // Terms have not been accepted. Show terms (perhaps using performSegueWithIdentifier)
+            self.performSegueWithIdentifier("showTerms", sender: nil)
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
